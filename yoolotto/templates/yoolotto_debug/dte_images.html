@@ -1,0 +1,98 @@
+<html>
+<head></head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+function downloadChecked( )
+{
+	
+    for( i = 0 ; i < document.downloadform.elements.length ; i++ )
+    {
+	  foo = document.downloadform.elements[ i ] ;
+	  if( foo.type == "checkbox" && foo.checked == true && foo.name != 'image' )
+	  {
+		var link = document.createElement("a");
+    	link.download = foo.value;
+    	link.href = "http://qa.yoolotto.com/"+foo.value;
+    	link.click();
+	  }
+    }
+}
+
+function toggleTexas(source) {
+  checkboxes = document.getElementsByName('image-tx');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+
+function toggleCailifornia(source) {
+  checkboxes = document.getElementsByName('image-ca');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+
+function toggleTexasDefected(source) {
+  checkboxes = document.getElementsByName('image-tx-defected');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+  </script>
+<body>
+	<form name='downloadform'>
+	<center>
+	<input type="button"  id="download" onclick="downloadChecked()" value="Download" >
+	</center>
+	<br/>
+	<br/>
+	<div style="width:33%;float:left">
+	<h3>Texas Good Tickets</h3>
+	<input type="checkbox" name="image" value="tx-all" onclick="toggleTexas(this)">Select All
+	<br/>
+	<br/>
+	{% for ticket in tx_tickets %}
+	{% if not ticket.2 %}
+		<input type="checkbox" name="image-tx" value="{{ ticket.1 }}">
+		<a href="http://qa.yoolotto.com/{{ ticket.1 }}" >{{ ticket.1 }}
+		<br/>
+	{% endif %}
+	{% endfor %}
+	</div>
+
+	<div style="width:33%;float:left">
+	<h3>Texas Defected Tickets</h3>
+	<input type="checkbox" name="image" value="tx-all-defected" onclick="toggleTexasDefected(this)">Select All
+	<br/>
+	<br/>
+	{% for ticket in tx_tickets %}
+		{% if ticket.2 %}
+		<input type="checkbox" name="image-tx-defected" value="{{ ticket.1 }}">
+		<a href="http://qa.yoolotto.com/{{ ticket.1 }}" >{{ ticket.1 }}
+		<br/>
+		{% endif %}
+	{% endfor %}
+	</div>
+
+	<div style="width:33%;float:right">
+	<h3>Cailifornia Tickets</h3>
+	<input type="checkbox" name="image" value="ca-all" onclick="toggleCailifornia(this)">Select All
+	<br/>
+	<br/>
+	{% for ticket in ca_tickets %}
+
+		<input type="checkbox" name="image-ca" value="{{ ticket.1 }}">
+		<a href="http://qa.yoolotto.com/{{ ticket.1 }}" >{{ ticket.1 }}
+		<br/>
+	{% endfor %}
+		
+	</div>
+	
+	</form>
+</body>
+</html>
+
+
+

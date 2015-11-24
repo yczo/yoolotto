@@ -1,0 +1,237 @@
+//========= Json For Texas Games (Process Ticket)=======================//
+1. For PowerBall
+
+{
+    "drawTime": null,
+    "state": 1,
+    "lines": [
+        {
+            "amount": null,
+            "numbers": [
+                12,
+                11,
+                14,
+                15,
+				19,
+				09
+            ],
+            "lineType": null,
+			"sumitUp":null,
+			"sumAmount":null
+			
+        },
+        {
+            "amount": null,
+            "numbers": [
+                52,
+				13,
+				11,
+				07,
+				12,
+				34
+            ],
+            "lineType": null,
+			"sumitUp":null,
+			"sumAmount":null
+        }
+    ],
+    "drawdate": "2014-10-09",
+    "gametypeid": 1,
+    "ismultiplier": true
+}
+
+2. For Mega Million
+
+{
+    "drawTime": null,
+    "state": 1,
+    "lines": [
+        {
+            "amount": null,
+            "numbers": [
+                12,
+                11,
+                14,
+                15,
+                19,
+                09
+            ],
+            "lineType": null,
+            "sumitUp":null,
+            "sumAmount":null
+        },
+        {
+            "amount": null,
+            "numbers": [
+                52,
+                13,
+                19,
+                07,
+                11,
+                34
+            ],
+            "lineType": null,
+            "sumitUp":null,
+            "sumAmount":null
+        }
+    ],
+    "drawdate": "2014-10-09",
+    "gametypeid": 2,
+    "ismultiplier": true
+}
+
+
+3. For Lotto Texas
+
+{
+    "drawTime": null,
+    "state": 1,
+    "lines": [
+        {
+            "amount": null,
+            "numbers": [
+                12,
+                11,
+                14,
+                15,
+                19,
+                09
+            ],
+            "lineType": null,
+            "sumitUp":null,
+            "sumAmount":null
+        }
+    ],
+    "drawdate": "2014-10-09",
+    "gametypeid": 3,
+    "ismultiplier": false
+}
+
+4. For Texa Two Step
+
+{
+    "drawTime": null,
+    "state": 1,
+    "lines": [
+        {
+            "amount": null,
+            "numbers": [
+                12,
+                11,
+                14,
+                15,
+                19
+            ],
+            "lineType": null,
+            "sumitUp":null,
+            "sumAmount":null
+        }
+    ],
+    "drawdate": "2014-10-09",
+    "gametypeid": 4,
+    "ismultiplier": false
+}
+
+5. For Pick Three
+
+{
+    "drawTime": 0,
+    "state": 1,
+    "lines": [
+        {
+            "amount": "1",
+            "numbers": [
+                12,
+                11,
+                14
+            ],
+            "lineType": 4,
+            "sumitUp":39,
+            "sumAmount":"0.50"
+        },
+        {
+            "amount": "4",
+            "numbers": [
+                52,
+                13,
+                19
+            ],
+            "lineType": 1,
+            "sumitUp":null,
+            "sumAmount":null
+        }
+    ],
+    "drawdate": "2014-10-09",
+    "gametypeid": 5,
+    "ismultiplier": false
+}
+
+
+6. For Daily Four
+{
+    "drawTime": 2,
+    "state": 1,
+    "lines": [
+        {
+            "amount": "4",
+            "numbers": [
+                12,
+                11,
+                14,
+                15
+            ],
+            "lineType": 1,
+            "sumitUp":34,
+            "sumAmount":"1.00"
+        },
+        {
+            "amount": "1",
+            "numbers": [
+                52,
+                13,
+                19,
+                07
+            ],
+            "lineType": 4,
+            "sumitUp":null,
+            "sumAmount":null
+        }
+    ],
+    "drawdate": "2014-10-09",
+    "gametypeid": 6,
+    "ismultiplier": false
+}
+
+
+7. For All or Nothing
+
+{
+    "drawTime": 1,
+    "state": 1,
+    "lines": [
+        {
+            "amount": null,
+            "numbers": [
+                12,
+                11,
+                14,
+                15,
+                19,
+                09,
+                16,
+                22,
+                24,
+                08,
+                32,
+                22
+            ],
+            "lineType": null,
+            "multiplier": "False",
+            "sumitUp":null,
+            "sumAmount":null
+        }
+    ],
+    "drawdate": "2014-10-09",
+    "gametypeid": 8,
+    "ismultiplier": false
+}

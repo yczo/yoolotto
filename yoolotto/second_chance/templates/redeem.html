@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=300, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>YooLotto Redeem Coupon</title>
+    <link rel="stylesheet" href="/static/css/redeem.css" type="text/css" />
+    
+    <script type="text/javascript" src="/static/js/lib/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var seconds = {{time}};
+            var container = $("#timer");
+            
+            function set() {
+                function pad(value) {
+                    var pad = "00";
+                    return (pad+value).slice(-pad.length);
+                }
+                
+                var text = "";
+                        
+                if(seconds > 59) {
+                    text += pad(Math.floor(seconds/60));
+                    text += ":";
+                    text += pad(seconds % 60);
+                } else {
+                    text += "00:" + pad(seconds);
+                    
+                    if(seconds % 2 == 0) {
+                        container.addClass("warning");
+                    } else {
+                        container.removeClass("warning");
+                    }                    
+                }
+                
+                container.text(text);
+            }
+            
+            function _tick() {
+                seconds -= 1;
+                                
+                if(seconds < 0) {
+                    clearInterval(interval);
+                    $(".blankout .reason").text("Coupon Redeemed");
+                    $(".blankout").fadeIn();
+                } else {
+                    set();
+                }
+            };
+            
+            var interval = setInterval(function() {_tick()}, 1000);
+            
+            
+            
+            
+        });
+    </script>
+</head>
+<body>
+
+
+
+<div id="redeem">
+    <div class="blankout">
+        <div class="padding"></div>
+        <div class="reason"></div>
+    </div>
+
+    <div class="header">
+        <div class="text">{{remainder}}% Left</div>
+        <div class="available">
+            <div class="redeemed" style="width:{{percent}}%"></div>
+        </div>
+    </div>
+    
+
+    <div class="inner">
+        <!--
+        <div class="days">Valid From {{from}} - {{to}}</div>
+        -->
+        <img src="/static/coupon/vendor/dickeys/background.jpg" style="width: 260px; height: 229px; margin-top: -20px; margin-bottom: -20px;" />
+        <!--
+        <div id="timer" class="timer"></div>
+        -->
+         
+        <img src="/static/coupon/vendor/dickeys/upc.png" class="upc" />
+        
+        <div class="disclaimer">
+            Good at participating locations only. No value and cannot be combined 
+            with other offers. &copy; 2013 Dickey's Barbecue Restaurants
+        </div>
+    </div>
+</div>
+</body>
+</html>
