@@ -1,0 +1,7 @@
+Hey there! 
+
+Coupon Name : {{ coupon_obj.name }}
+Coupon Name : {{ coupon_obj.valid_from }} {{ coupon_obj.valid_to }}
+
+YOOLOTTO TEAM
+

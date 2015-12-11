@@ -1,0 +1,154 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>promo</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	
+    <script src="/static/js/lib/jquery-1.10.1.min.js" language="JavaScript"></script>
+    <style>
+        @font-face {
+            font-family: 'FuturaT-Medium';
+            src: url('/static/fonts/FuturaT-Medium.ttf');
+        }
+        @font-face {
+            font-family: 'FuturaT-Bold';
+            src: url('/static/fonts/FuturaT-Bold.ttf');
+        }
+        
+        body {
+	        background: #fd9f1d;
+            font-family: "FuturaT-Medium";
+            -webkit-touch-callout: none;
+        }
+        body a {
+            color: black;
+        }
+        .image img {
+            display: block;
+            margin: 20 auto;
+        }
+        .txbox input[type="email"] {
+            display: block;
+            width: 230px;
+            height: 44px;
+            margin: 0 auto;
+            font-size: 18px;
+            font-family: "FuturaT-Bold";
+            text-align: center;
+        }
+        .rules {
+            width: 230px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .yes {
+            width: 230px;
+            margin: 0 auto;
+        }
+        .choice {
+            width: 40%;
+            color: #FFF;
+            padding: 10px;
+            font-size: 18px;
+            font-family: "FuturaT-Bold";
+        }
+    }
+}
+
+    </style>
+</head>
+<body>
+        
+    <form id="promo" action="#">
+    <div id="image">
+        <div class="image">
+            <img src="/static/popup_contest@2x.png" width="236" height="177">
+        </div>
+        <div class="txbox">
+            <input type="email" placeholder="EMAIL ADDRESS" name="email">
+        </div>
+        <br />
+        <div class="rules">
+            By taking part in the promotion, you agree to the <a href="#" onclick="javascript:rules();">Official Rules</a>.
+            <br /><br />
+            <div class="choices" style="width: 100%;">
+                <div class="choice no" style="float: left; background: #000;">NO<br />THANKS</div>
+                <div class="choice yes" style="float: right; background: #ff6901;">FEELING<br />LUCKY!</div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+        <br />
+    </div>
+    </form>
+    
+<script>
+
+function rules(){
+    alert('You can read the rules on your browser by going to the following website: http://yoolotto.com/promotion-may2013rules/');
+}
+
+$(function() {
+    function createCookie(name, value, days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            var expires = "; expires=" + date.toGMTString();
+        } else var expires = "";
+        document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+    }
+
+    var submitted = false;
+    function checkForm() {
+        if(!$("#promo input[name=email]").val()) {
+            alert("Email Required");
+            return;
+        }
+    
+        if (submitted)
+        {
+            alert('Please wait while we check if you won!');
+        }
+        else
+        {
+            submitted = true;
+            return true;
+        }
+    }
+    function close() {
+        window.location.href = "app://dismiss";
+    }
+
+    $(".no").click(function(){
+        close();
+    });
+    
+    $("#promo form").bind("submit", function(e){ 
+        e.preventDefault();
+        return false;
+    });
+    
+    $(".yes").bind("click", function(e){
+        e.preventDefault();
+        
+        createCookie("574a50850e524620a891fb8470f69b51", $("#promo input[name=email]").val());
+        
+        if(checkForm()) {
+            $.ajax({
+                type: "POST",
+                url: window.location.href,
+                data: $("#promo").serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                   window.location.href = window.location.origin + data["url"];
+                }
+            });
+        }
+        
+        return false;
+    });
+});
+
+</script>
+
+</body>
+</html>

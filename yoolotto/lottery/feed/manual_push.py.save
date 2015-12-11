@@ -1,0 +1,140 @@
+import random
+from yoolotto.lottery.models import LotteryTicket, LotteryDraw
+from django.views.generic import View
+from django.http.response import HttpResponse
+from yoolotto.lottery.tasks import notify_draw_result_all
+
+'''
+Examples:-
+
+(find tickets of draw)
+http://IP:PORT/lottery/manual_notification/find_tickets?of_draw=7808
+
+(send notification for ticket id  directly)
+http://IP:PORT/lottery/manual_notification?for_ticket=33370
+ OR 
+(send notification for all tickets of draw )
+http://IP:PORT/lottery/manual_notification?for_draw=7808
+
+'''
+
+class ManualNotification(View):
+    def get(self,request):
+        notification_type=request.GET.get('type','result')
+        for_draw=int(request.GET.get('for_draw','0'))
+        for_ticket=int(request.GET.get('for_ticket','0'))
+        
+        result=""
+        if notification_type=='result':
+            if LotteryTicket.objects.filter(id=for_ticket).exists():
+                result=notify_draw_result_for_ticket(for_ticket)
+            elif LotteryDraw.objects.filter(id=for_draw).exists():
+                result=notify_draw_result_all(for_draw)
+        else:
+            result=" Frenzy not implemented !"
+        
+        
+        return HttpResponse("TYPE (result / frenzy) = "+str(notification_type)+"<br>" \
+                            "for_draw = "+str(for_draw if for_draw else "NOT FOUND")+"<br>" \
+                            "for_ticket = "+str(for_ticket if for_ticket else "NOT FOUND")+"<br>" \
+                             "----------------------------------<br>"+\
+                             result+"<br><br>"\
+                             ">>>>>>>>INVALID ANDROID DEVELOPER!<<<<<<<<"
+                            )
+        
+        
+    
+    def post(self,request):
+        return HttpResponse(" IDIOT ")
+        
+class FindTickets(View):
+    def get(self,request):
+        of_draw=request.GET.get('of_draw','')
+        total=0
+        tickets=None
+        last=None
+        
+        if not of_draw:
+            return HttpResponse("!!  of_draw not provided  !!")
+        if LotteryDraw.objects.filter(id=of_draw).exists():
+            if LotteryTicket.objects.filter(draw__id=int(of_draw)).exists():
+                total=LotteryTicket.objects.filter(draw__id=int(of_draw)).count()
+                tickets=LotteryTicket.objects.filter(draw__id=int(of_draw)).values('pk')
+                if tickets:
+		    last=LotteryTicket.objects.order_by(w__id=int(of_draw)).last().id
+        else:
+            return HttpResponse("!!  INVALID DRAW ID  !!")
+        
+        
+        result="Total = "+str(total)+"<br>" \
+               "Tickets Found ="+str(tickets)+"<br>" \
+               "Last ticket ="+str(last)
+        return HttpResponse(result)
+         
+         
+     
+    def post(self,request):
+        return HttpResponse(" IDIOT ")
+        
+    
+      
+                            
+
+def notify_draw_result_all(draw_id):
+    from yoolotto.lottery.models import LotteryTicket
+    result=''
+    for _id in set([x["pk"] for x in LotteryTicket.objects.filter(
+        draw_id=int(draw_id), submissions__checked=False).values("pk")]):
+        result=result+"\n\n"+notify_draw_result_for_ticket(_id)
+    return result
+
+def notify_draw_result_for_ticket(ticket_id):
+    from yoolotto.lottery.models import LotteryTicket
+    from yoolotto.communication.apn import APNSender
+    from yoolotto.communication.gcm_sender import GCMSender
+        
+    try:
+        ticket = LotteryTicket.objects.get(pk=int(ticket_id))
+    except:
+        return
+    
+    if not ticket.user.preferences.jackpot_drawing:
+        return
+    
+    log = ""
+    log += "\nTicket: " + str(ticket.pk)
+    text = "Results available for %s" % ticket.draw.component.name
+    log += "\n" + text
+    
+    for device in ticket.user.devices.all():
+        if not device.device_token:
+            log += "\nSkipped Device, No Token"
+            continue
+        
+        if device.is_ios():
+            apn = APNSender(device.device_token, text=text, 
+               custom={"code": "draw", "drawId": ticket.draw.pk})
+            print apn.send()
+            log += "\nAPN Outbound: %s" % device.device_token
+        elif device.is_android():
+           gcm = GCMSender(to=[device.device_token], data={"text": text,
+                "code": "draw", "drawId": ticket.draw.pk,"state":ticket.division.remote_id
+           })
+           print gcm.send()
+           log += "\nGCM Outbound: %s" % device.device_token
+    
+    #ticket.notified = True
+    ticket.save()
+    
+    return log
+
+
+
+
+
+# draw_id=-1
+# print LotteryTicket.objects.filter(draw_id=int(draw_id)).count()
+# print LotteryTicket.objects.filter(draw_id=int(draw_id)).last().id#values("pk")
+
+#print notify_draw_result_for_ticket(33369)
+

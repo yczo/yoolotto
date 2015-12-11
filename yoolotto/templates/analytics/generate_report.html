@@ -1,0 +1,59 @@
+{% extends 'admin/base_site.html' %}
+{% block title %}Yoolotto | Analytics{% endblock %}
+{% block content %}
+{% block extrahead %}
+<style type="text/css">
+    form label {display:block;width:250px;font-weight:bold;float:left;}
+    form textarea {width:900px;}
+    form p {clear:both;}
+    form ul {float:left;}
+    form li {list-style-type: none;clear:left;}
+</style>
+{% endblock %}
+
+<div>
+<table>
+	<tr>
+		<td>
+			<h3>Yoolotto Analytics:</h3>		
+		</td>
+		<td>
+			<h3><a href="{% url "notifications" %}">Notifications</a></h3>	
+		</td>
+		<td>
+			<h3><a href="{% url "winnings" %}">Winnings</a></h3>	
+		</td>
+	</tr>
+</table>
+
+</div>
+<form method="POST" action="">
+	<br/>
+
+	<div>{{form_data.as_p}}</div>
+	<div id="interview_dd">
+		<span></span>
+	</div>
+	
+	{% if stats %}
+		<div>
+		<table>
+			<tbody>
+				{% for data in stats %}
+					<tr>
+						<td>{{ data.0 }}</td>
+						<td>{{ data.1 }}</td>
+						<td></td>
+						<td></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>	
+	</div>
+	<input type="submit" value="Download Data"  name="export" />
+	{% endif %}
+	<input type="submit" value="Generate Data"  name="submit" />
+</form>
+{% endblock %}
+
+

@@ -1,0 +1,95 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>promo</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	
+    <script src="/static/js/lib/jquery-1.10.1.min.js" language="JavaScript"></script>
+    <style>
+        body {
+            font-family: "Futura-Medium";
+            -webkit-touch-callout: none;
+            background: #fd9f1d;
+            text-transform: uppercase;
+        }
+        body a {
+            color: black;
+        }
+        .image img {
+            display: block;
+            margin: 20 auto;
+        }
+        .txbox input[type="email"] {
+            display: block;
+            width: 460px;
+            height: 88px;
+            margin: 0 auto;
+            font-size: 36px;
+            font-family: "Futura-CondensedExtraBold";
+            text-align: center;
+        }
+        .rules {
+            width: 230px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .yes {
+            width: 460px;
+            margin: 0 auto;
+        }
+        
+        .choice {
+            width: 100%;
+            margin: 0 auto;
+            color: #FFF;
+            padding: 10px 0px;
+            font-size: 24px;
+        }
+        .orange_background {
+            color: #000;
+            background: #ff6901;
+        }
+        
+        .orange_color {
+            color: #ff6901;
+        }
+    </style>
+</head>
+<body>
+        
+    <form id="promo" method="POST">
+    <div id="image">
+        <!--
+        <div class="image">
+            <img src="/static/popup_contest@2x.png">
+        </div>
+        <div class="txbox">
+            <input type="email" placeholder="EMAIL ADDRESS" name="email">
+        </div>
+        <br />
+        -->
+        <div class="rules">
+            <span style="color: #FFF; font-size: 24px;">Looks like you've already played</span>
+            <br /><br />
+            <span style"font-size: 18px;">Is this in error? contact@yoolotto.com</span>
+            <br /><br />
+            <div class="choices" style="width: 100%;">
+                <div class="choice close" style="background: #ff6901;">OK</div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+        <br />
+        
+    </div>
+    </form>
+    
+<script>
+$(function() {
+    $(".close").click(function(){
+        window.location.href = "app://dismiss";
+    });
+});
+</script>
+
+</body>
+</html>
